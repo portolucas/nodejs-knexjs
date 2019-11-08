@@ -24,5 +24,9 @@ module.exports = {
                 description: product.description,
                 price: product.price
             });
+    },
+    getById(id) {
+        return db(TABLE_NAME)
+        .where('id', id)
     }
 }
