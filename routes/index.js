@@ -12,7 +12,7 @@ router.get('/', function(_, res) {
     })
 });
 
-router.get('/product/:id', function(req, res) {
+router.get('/product/:id', function(req, res) { // GET -> PARAMS, POST -> body
   Products.getById(req.params.id)
   .then(function(product) {  
       comment.find({
@@ -22,15 +22,13 @@ router.get('/product/:id', function(req, res) {
   })
 })
 
-router.post('/:id', function(req, res) {
-  comment.create(req.body)
-  .then(() => console.log('Deu'))
-  .catch(console.log('Errou'))
-  
-  Products.getById(req.body.product_id)
-  .then(function(products) {
-    res.render('product', {products} )
-  })
-})
+router.post('/product', function(req, res) {
+  /* salvar comentário */
+  comment.create({
+    product_id: req.body.product_id,
+    author: req.body.author,
+    comment: req.body.comment
+  }).then(() => res.send("Comentário adicionado com sucesso!"));
+});
 
 module.exports = router;
